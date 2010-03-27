@@ -11,6 +11,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.conf import settings
+from django.contrib.auth.models import User
 
 def upload_path(object, original):
   """Tells the FileField how to choose a name for this file."""
@@ -25,6 +26,8 @@ def upload_path(object, original):
 
 class Package(models.Model):
   """Describes a Downloadable package."""
+
+  user = models.ForeignKey(User)
 
   name = models.CharField(_(u'Name'), max_length=512, 
     help_text=_(u'Set the name of the package in this entry.'), 

@@ -8,4 +8,5 @@ build/
 scripts/bootstrap.py
 ez_setup.py
 test/bitrepo
+test/packages
 *.swp

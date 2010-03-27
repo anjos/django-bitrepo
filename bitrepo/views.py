@@ -13,9 +13,11 @@ from django.shortcuts import render_to_response, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.contrib.auth.decorators import login_required
 
 from models import *
 
+@login_required
 def view_list(request, template_name='bitrepo/list.html'):
   objs = Package.objects.all().order_by('-date')
   paginator = Paginator(objs, 10)
@@ -32,10 +34,11 @@ def view_list(request, template_name='bitrepo/list.html'):
   
   return render_to_response(template_name, 
       {
-        'object_list': objs,
+        'pages': objs,
       }, 
       context_instance=RequestContext(request))
 
+@login_required
 def view_package(request, id, template_name='bitrepo/package.html'):
   obj = Package.object.get(id=id)
   return render_to_response(template_name, 
@@ -55,10 +58,21 @@ def make_zip(obj):
   f.seek(0)
   return f.read() #read all and return to the caller.
 
+@login_required
 def zip_package(request, id): 
   obj = Package.objects.get(id=id)
   data = make_zip(obj)
   retval = HttpResponse(data, mimetype='application/zip')
   retval['Content-Disposition'] = 'attachment; filename=%s.zip' % obj.name
+  retval['Content-Length'] = len(data)
+  return retval
+
+@login_required
+def get_torrent(request, id):
+  obj = Package.objects.get(id=id)
+  obj.torrent.open(mode='rb')
+  data = obj.torrent.read()
+  retval = HttpResponse(data, mimetype='application/x-bittorrent')
+  retval['Content-Disposition'] = 'attachment; filename=%s.torrent' % obj.name
   retval['Content-Length'] = len(data)
   return retval

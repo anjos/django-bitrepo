@@ -17,7 +17,10 @@ setup(
     # we also need all translation files and templates
     package_data = {
       'bitrepo': [
+        'templates/bitrepo/*.html',
         'media/js/*.js',
+        'media/img/svg/*.svg',
+        'media/img/png/*/*.png',
         ],
       },
 

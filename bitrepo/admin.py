@@ -19,11 +19,11 @@ class SubtitleInline(admin.StackedInline):
   extra = 2
     
 class PackageAdmin(admin.ModelAdmin):
-  list_display = ('name', 'date', 'torrent',)
-  list_filter = ['date']
+  list_display = ('name', 'user', 'date', 'torrent',)
+  list_filter = ['date', 'user']
   list_per_page = 10
   ordering = ['-date']
-  search_fields = ['name',]
+  search_fields = ['name', 'user']
   date_hierarchy = 'date'
   inlines = [
       SubtitleInline,

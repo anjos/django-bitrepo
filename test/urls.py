@@ -9,7 +9,7 @@ from bitrepo.urls import namespaced as test_urls
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', redirect_to, {'url': '/test/'}),
+    url(r'^$', redirect_to, {'url': '/bt/'}),
     url(r'^bt/', test_urls),
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),

@@ -1,0 +1,9 @@
+{% load i18n bitrepo_filters %}
+<span class="pagination">
+  {% for k in paginator|special_pagination %}
+  {% if k %}
+    <span class="page{% ifequal k paginator.number %} current{% endifequal %}"><a href="?page={{ k }}" title="{% blocktrans with k as page %}go to page {{ page }}{% endblocktrans %}">{{ k }}</a></span>
+  {% else %}
+    <span class="dots">...</span>{% endif %}
+  {% endfor %}
+</span>

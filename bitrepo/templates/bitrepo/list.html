@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n bitrepo_tags %}
+
+{% block media %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}{% trans "Packages" %}{% endblock %}
+
+{% block content %}
+<div class="bitrepo">
+  <p class="title">{% trans "Available Packages" %}</p>
+  <p>{% trans "From this page you have access to all uploaded packages. A package is comprised of a torrent file and attachments (subtitles for example). You can download the whole package as a zip file or just the torrent. Choose by clicking on the appropriate icons bellow." %}</p>
+
+<p class="pagination">pages: {% bitrepo_paginator pages %}</p>
+
+<table class="packages">
+  <tr>
+    <th colspan="2">{% trans "Downloads" %}</th>
+    <th>{% trans "Name" %}</th>
+    <th>{% trans "Date" %}</th>
+    <th>{% trans "User" %}</th>
+  </tr>
+  {% for obj in pages.object_list %}
+  <tr class="{% cycle "even" "odd" %}">
+    <td class="zip">
+      <a href="{% url bitrepo:zip obj.id %}" title="{% trans "package download" %}"><img src="{% url media "bitrepo/img/png/16/zip.png" %}" width="16" height="16"/></a>
+    </td> 
+    <td class="torrent">
+      <a href="{% url bitrepo:torrent obj.id %}" title="{% trans "torrent download" %}"><img src="{% url media "bitrepo/img/png/16/bittorrent.png" %}" width="16" height="16"/></a>
+    </td> 
+    <td class="name">{{ obj.name }}</td>
+    <td class="date">{{ obj.date|date:"r" }}</td>
+    <td class="user">{{ obj.user }}</td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="5">{% trans "No packages uploaded so far." %}</td></tr>
+  {% endfor %}
+</table>
+
+</div>
+{% endblock %}
