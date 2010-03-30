@@ -63,7 +63,7 @@ def zip_package(request, id):
   obj = Package.objects.get(id=id)
   data = make_zip(obj)
   retval = HttpResponse(data, mimetype='application/zip')
-  retval['Content-Disposition'] = 'attachment; filename=%s.zip' % obj.name
+  retval['Content-Disposition'] = 'attachment; filename="%s.zip"' % obj.name
   retval['Content-Length'] = len(data)
   return retval
 
@@ -73,6 +73,6 @@ def get_torrent(request, id):
   obj.torrent.open(mode='rb')
   data = obj.torrent.read()
   retval = HttpResponse(data, mimetype='application/x-bittorrent')
-  retval['Content-Disposition'] = 'attachment; filename=%s.torrent' % obj.name
+  retval['Content-Disposition'] = 'attachment; filename="%s.torrent"' % obj.name
   retval['Content-Length'] = len(data)
   return retval
