@@ -18,13 +18,13 @@ class SubtitleInline(admin.StackedInline):
     )
   extra = 2
     
-class PackageAdmin(admin.ModelAdmin):
-  list_display = ('name', 'user', 'date', 'torrent',)
-  list_filter = ['date', 'user']
+class MovieAdmin(admin.ModelAdmin):
+  list_display = ('name', 'year', 'user', 'date', 'link',)
+  list_filter = ['name', 'year', 'user', 'date',]
   list_per_page = 10
   ordering = ['-date']
-  search_fields = ['name', 'user']
-  date_hierarchy = 'date'
+  search_fields = ['name', 'year', 'user']
+  #date_hierarchy = 'date'
   inlines = [
       SubtitleInline,
       ]
@@ -35,6 +35,6 @@ class PackageAdmin(admin.ModelAdmin):
   #    settings.BITREPO_MEDIA_URL + "js/add_tabular_inline.js",
   #  )
 
-admin.site.register(Package, PackageAdmin)
+admin.site.register(Movie, MovieAdmin)
 
 

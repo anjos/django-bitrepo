@@ -19,22 +19,22 @@ def upload_path(object, original):
     d = hashlib.sha1(object.name).hexdigest()[:8]
     date = object.date
   else:
-    d = hashlib.sha1(object.package.name).hexdigest()[:8]
-    date = object.package.date
+    d = hashlib.sha1(object.movie.name).hexdigest()[:8]
+    date = object.movie.date
   f = hashlib.sha1(original).hexdigest()[:8]
   return os.path.join('packages', date.strftime('%Y/%m'), d, f)
 
 class Package(models.Model):
   """Describes a Downloadable package."""
 
-  user = models.ForeignKey(User)
+  user = models.ForeignKey(User, null=False, default=User.objects.get(id=1))
 
   name = models.CharField(_(u'Name'), max_length=512, 
     help_text=_(u'Set the name of the package in this entry.'), 
     null=False, blank=False, unique=True)
 
   date = models.DateTimeField(_('Creation date'), 
-      auto_now_add=True, editable=False)
+      auto_now_add=True, editable=False, null=False, blank=False)
 
   torrent = models.FileField(_('Torrent'), upload_to=upload_path,
       help_text=_('Specify here the torrent file that should be uploaded.'),
@@ -48,10 +48,30 @@ class Package(models.Model):
     verbose_name = _('package')
     verbose_name_plural = _('packages')
 
-class Subtitle(models.Model):
-  """This package's subtitle track."""
+class Movie(Package):
+  """Describes a movie package."""
 
-  package = models.ForeignKey(Package)
+  year = models.PositiveIntegerField(_(u'Year'), 
+      default=datetime.date.today().year,
+      help_text=_(u'Set here the year in which the movie was released.'),
+      null=False, blank=False)
+
+  link = models.URLField(_(u'Link'),
+      help_text=_(u'Set here an optional URL to a website containing a description of this movie (e.g. the movie website or the IMDB page).'),
+      null=True, blank=True)
+
+  def __unicode__(self):
+    return ugettext(u"Movie '%(name)s'" % {'name':self.name})
+
+  # make it translatable
+  class Meta:
+    verbose_name = _('movie')
+    verbose_name_plural = _('movie')
+
+class Subtitle(models.Model):
+  """This movie's subtitle track."""
+
+  movie = models.ForeignKey(Movie)
 
   original = models.CharField(_('Original'), max_length='100',
       null=True, blank=True, editable=False,)
@@ -70,8 +90,8 @@ class Subtitle(models.Model):
     super(Subtitle, self).save(*args, **kwargs)
 
   def __unicode__(self):
-    return ugettext(u"%(language)s subtitles for package '%(name)s'" % \
-        {'language': self.language, 'name': self.package.name})
+    return ugettext(u"%(language)s subtitles for movie '%(name)s'" % \
+        {'language': self.language, 'name': self.movie.name})
 
   # make it translatable
   class Meta:

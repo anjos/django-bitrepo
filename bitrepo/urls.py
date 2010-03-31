@@ -12,7 +12,7 @@ from bitrepo.views import *
 urlpatterns = patterns('',
 
   url(r'^$', view_list, name='index'),
-  url(r'^zip/(?P<id>\d+)/$', zip_package, name='zip'),
+  url(r'^zip/(?P<id>\d+)/$', zip_movie, name='zip'),
   url(r'^torrent/(?P<id>\d+)/$', get_torrent, name='torrent'),
   
 )
