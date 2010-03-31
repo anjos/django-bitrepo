@@ -6,8 +6,7 @@ import os
 
 BASEDIR = os.path.dirname(os.path.realpath(__file__)) 
 SITE_ID = 1
-if SITE_ID == 1: # we are at localhost
-  EMAIL_PORT = 1025
+EMAIL_PORT = 1025
 
 DATABASE = os.path.join(BASEDIR, 'db.sql3')
 

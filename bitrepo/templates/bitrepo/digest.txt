@@ -1,0 +1,16 @@
+{% load i18n %}{% trans "Hello" %},
+
+{% blocktrans with days as days and site.domain as domain %}This is an mail digest of our torrent database activity over the last {{ days }} days. To be able to click on the links bellow, make sure you are logged into {{ domain }}, by visiting it and authenticating yourself first.{% endblocktrans %}
+
+{% for obj in objects %}{{ forloop.counter }}. {{ obj.name.capitalize }} ({{ obj.year }})
+  * {% trans "Uploaded by" %} {{ obj.user.first_name.capitalize }}, {{ obj.date|date:"D, d/m/y, H:i T" }}
+  * {% trans "Complete package" %}: http://{{ site.domain }}{% url bitrepo:zip obj.id %}
+  * {% trans "Only the torrent" %}: http://{{ site.domain }}{% url bitrepo:torrent obj.id %}
+  * {% trans "More information" %}: {{ obj.link }}
+
+{% endfor %}
+
+{% trans "Happy torrent thoughts!" %}
+
+--
+{% blocktrans with site.domain as domain %}Your {{ domain }} robot{% endblocktrans %}

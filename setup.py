@@ -11,13 +11,14 @@ from setuptools import setup, find_packages
 setup(
 
     name = 'django-bitrepo',
-    version = '0.2',
+    version = '0.2.1',
     packages = find_packages(),
 
     # we also need all translation files and templates
     package_data = {
       'bitrepo': [
         'templates/bitrepo/*.html',
+        'templates/bitrepo/*.txt',
         'media/js/*.js',
         'media/img/svg/*.svg',
         'media/img/png/*/*.png',
@@ -26,6 +27,7 @@ setup(
 
     entry_points = {
       'console_scripts': [
+        'bitrepo_digest.py = bitrepo.scripts.mail_digest:main', 
         ],
       },
 

@@ -10,5 +10,3 @@ from django.conf import settings
 
 BITREPO_MEDIA_URL = getattr(settings, 'BITREPO_MEDIA_URL', 
     settings.MEDIA_URL + 'bitrepo/')
-
-

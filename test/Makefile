@@ -23,6 +23,9 @@ clean:
 	@find . -name '*.pyc' -print0 | xargs -0 rm -f
 	@find . -name '*~' -print0 | xargs -0 rm -f
 
+smtp:
+	$(python) -m smtpd -n -c DebuggingServer localhost:1025
+
 mrproper: clean
 	@rm -f $(project)
 	@rm -rf packages
