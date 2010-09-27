@@ -29,7 +29,7 @@ class Package(models.Model):
 
   user = models.ForeignKey(User, null=False, default=User.objects.get(id=1))
 
-  name = models.CharField(_(u'Name'), max_length=512, 
+  name = models.CharField(_(u'Name'), max_length=255, 
     help_text=_(u'Set the name of the package in this entry.'), 
     null=False, blank=False, unique=True)
 

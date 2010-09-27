@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 setup(
 
     name = 'django-bitrepo',
-    version = '0.2.1',
+    version = '0.2.2',
     packages = find_packages(),
 
     # we also need all translation files and templates
