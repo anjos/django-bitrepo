@@ -27,7 +27,7 @@ def upload_path(object, original):
 class Package(models.Model):
   """Describes a Downloadable package."""
 
-  user = models.ForeignKey(User, null=False, default=User.objects.get(id=1))
+  user = models.ForeignKey(User, null=False)
 
   name = models.CharField(_(u'Name'), max_length=255, 
     help_text=_(u'Set the name of the package in this entry.'), 
