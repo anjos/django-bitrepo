@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n bitrepo_tags %}
+{% load staticfiles i18n bitrepo_tags %}
 
 {% block media %}
 {{ block.super }}
@@ -31,11 +31,11 @@
   {% for obj in pages.object_list %}
   <tr class="{% cycle "even" "odd" %}">
     <td class="shortcuts">
-      <a href="{% url bitrepo:zip obj.id %}" title="{% trans "full package download" %}"><img src="{% url media "bitrepo/img/png/16/zip.png" %}" width="16" height="16"/></a>
-      <a href="{% url bitrepo:torrent obj.id %}" title="{% trans "torrent download" %}"><img src="{% url media "bitrepo/img/png/16/bittorrent.png" %}" width="16" height="16"/></a>
-      <a href="{% url admin:bitrepo_movie_change obj.id %}" title="{% trans "edit this movie" %}"><img src="{% url media "bitrepo/img/png/16/edit.png" %}" width="16" height="16"/></a>
+      <a href="{% url bitrepo:zip obj.id %}" title="{% trans "full package download" %}"><img src="{% static "bitrepo/img/png/16/zip.png" %}" width="16" height="16"/></a>
+      <a href="{% url bitrepo:torrent obj.id %}" title="{% trans "torrent download" %}"><img src="{% static "bitrepo/img/png/16/bittorrent.png" %}" width="16" height="16"/></a>
+      <a href="{% url admin:bitrepo_movie_change obj.id %}" title="{% trans "edit this movie" %}"><img src="{% static "bitrepo/img/png/16/edit.png" %}" width="16" height="16"/></a>
       {% if obj.link %}
-      <a href="{{ obj.link }}" title="{% trans "view more information about this movie" %}"><img src="{% url media "bitrepo/img/png/16/url.png" %}" width="16" height="16"/></a>
+      <a href="{{ obj.link }}" title="{% trans "view more information about this movie" %}"><img src="{% static "bitrepo/img/png/16/url.png" %}" width="16" height="16"/></a>
       {% endif %}
     </td> 
     <td class="name">{{ obj.name.capitalize }}</td>
